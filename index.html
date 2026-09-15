@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Oração na Hora</title>
+<meta name="description" content="Diga como você está e o motivo. Receba uma oração pronta na hora — sem estrutura, sem compromisso de dias." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;1,400;1,500&display=swap" />
+<style>
+  :root {
+    --cream: #FDFAF5;
+    --ink: #1E293B;
+    --amber: #A96D18;
+    --amber-soft: #C0862B;
+    --amber-wash: #F3E7D0;
+    --sage: #74856A;
+    --sage-deep: #566349;
+    --sage-wash: #E9EEE3;
+    --surface: #F6EEDF;
+    --line: #E5DAC4;
+    --muted: #6E6558;
+    --good: #4B7A4E;
+    --shadow: 0 1px 2px rgba(30,41,59,.05), 0 8px 28px -12px rgba(86,99,73,.22);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --cream: #1F1C18;
+      --ink: #EFE7D9;
+      --amber: #D89B4C;
+      --amber-soft: #E3AF68;
+      --amber-wash: #322A1D;
+      --sage: #A0B08D;
+      --sage-deep: #B7C6A4;
+      --sage-wash: #262A22;
+      --surface: #2A2620;
+      --line: #3C362E;
+      --muted: #A99E8C;
+      --good: #86B588;
+    }
+  }
+  *{box-sizing:border-box;}
+  html,body{overflow-x:hidden;max-width:100%;}
+  body{
+    margin:0; background:var(--cream); color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif; -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+  }
+  h1,h2,h3{font-family:"Sora",sans-serif; margin:0; letter-spacing:-.01em;}
+  .verse{font-family:"Spectral",serif; font-style:italic;}
+  .wrap{max-width:640px; margin:0 auto; padding:0 20px;}
+  header.top{padding:28px 20px 18px; text-align:center;}
+  header.top .kicker{color:var(--sage-deep); font-weight:600; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em;}
+  header.top h1{font-size:1.7rem; margin-top:6px;}
+  header.top p{color:var(--muted); margin-top:10px; font-size:.98rem; line-height:1.5;}
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:18px;
+    padding:20px; margin-top:16px; box-shadow:var(--shadow);
+  }
+  .card h2{font-size:1.05rem; margin-bottom:12px;}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:8px;}
+  .chip{
+    border:1px solid var(--line); background:var(--cream); color:var(--ink);
+    border-radius:12px; padding:10px 12px; font-size:.9rem; text-align:left;
+    cursor:pointer; transition:.15s; line-height:1.3;
+  }
+  .chip:hover{border-color:var(--amber-soft);}
+  .chip.active{background:var(--amber-wash); border-color:var(--amber); font-weight:600;}
+  .times{display:flex; gap:8px;}
+  .times .chip{flex:1; text-align:center;}
+  .cta{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--amber); color:#fff; border:none; border-radius:14px;
+    padding:15px 20px; font-family:"Sora",sans-serif; font-weight:600; font-size:1rem;
+    cursor:pointer; width:100%; margin-top:18px; box-shadow:var(--shadow);
+  }
+  .cta:disabled{opacity:.45; cursor:not-allowed;}
+  .cta.ghost{background:transparent; color:var(--sage-deep); border:1px solid var(--line); box-shadow:none;}
+  .roteiro{margin-top:18px; display:flex; flex-direction:column; gap:12px;}
+  .bloco{background:var(--cream); border:1px solid var(--line); border-radius:14px; padding:16px;}
+  .bloco .b-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;}
+  .bloco .b-name{font-family:"Sora",sans-serif; font-weight:600; font-size:.95rem; color:var(--sage-deep);}
+  .bloco .b-time{font-size:.78rem; color:var(--muted);}
+  .bloco .b-body{font-size:.96rem; line-height:1.55; white-space:pre-line;}
+  .bloco .b-verse{font-size:1.02rem; margin-bottom:8px;}
+  .bloco .b-ref{font-size:.82rem; color:var(--muted); margin-bottom:8px;}
+  .actions{display:flex; gap:10px; margin-top:14px;}
+  .actions .cta{margin-top:0;}
+  .fav-list{margin-top:10px; display:flex; flex-direction:column; gap:8px;}
+  .fav-item{background:var(--cream); border:1px solid var(--line); border-radius:12px; padding:10px 12px; font-size:.86rem; display:flex; justify-content:space-between; gap:10px; align-items:center;}
+  .fav-item button{background:none; border:none; color:var(--muted); cursor:pointer; font-size:.8rem;}
+  .muted{color:var(--muted); font-size:.85rem;}
+  footer{text-align:center; padding:30px 20px 10px; color:var(--muted); font-size:.8rem;}
+  .step-label{font-size:.78rem; color:var(--sage-deep); font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px;}
+  [hidden]{display:none!important;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.24.7/babel.min.js"></script>
+
+<script type="text/babel" data-presets="react">
+const { useState, useMemo, useEffect } = React;
+
+/* ---------- SITUAÇÕES (temas atemporais, sem trava de dia) ---------- */
+const SITUATIONS = [
+  { k:"perdoar", label:"Perdoar alguém",
+    v:"Quando estiverdes orando, perdoai, se tendes alguma coisa contra alguém.", r:"Marcos 11.25",
+    f:"Diga o nome. Perdoar na oração é decisão, não sentimento.",
+    pedir:"Senhor, eu escolho perdoar __. Não sinto ainda. Faz a decisão virar sentimento no teu tempo." },
+  { k:"palavras", label:"Não sei o que dizer",
+    v:"Vosso Pai sabe o que vos é necessário, antes de vós lho pedirdes.", r:"Mateus 6.8",
+    f:"Fala como você fala. Ele entende do seu jeito.",
+    pedir:"Senhor, tira de mim a ideia de que preciso orar bonito. Deixa eu falar contigo como falo com quem confio." },
+  { k:"cansaco", label:"Estou exausta",
+    v:"Vinde a mim, todos os que estais cansados e sobrecarregados, e eu vos aliviarei.", r:"Mateus 11.28",
+    f:"O cansaço não te desqualifica. É o motivo do convite.",
+    pedir:"Jesus, eu chego cansada. Não vou fingir disposição. Carrega hoje o que eu não consigo carregar." },
+  { k:"confissao", label:"Confessar sem rodeios",
+    v:"Se confessarmos os nossos pecados, ele é fiel e justo para nos perdoar.", r:"1 João 1.9",
+    f:"Diga o que é, pelo nome. Deus já sabe, e já está pronto para perdoar.",
+    pedir:"Senhor, eu confesso o que fiz e o que deixei de fazer. Não vou suavizar. Me limpa e me solta disso." },
+  { k:"gratidao", label:"Antes de pedir, agradecer",
+    v:"Entrai pelas suas portas com ação de graças e nos seus átrios com louvor.", r:"Salmo 100.4",
+    f:"Comece por três coisas que já estão de pé. Depois peça.",
+    pedir:"Pai, antes de pedir, obrigada por três coisas concretas de hoje. Agora eu trago o que preciso." },
+  { k:"medo", label:"Levar o medo a Deus",
+    v:"Não andeis ansiosos por coisa alguma; antes, em tudo, com oração, sejam conhecidas as vossas petições diante de Deus.", r:"Filipenses 4.6",
+    f:"Nomeie o medo. Medo sem nome cresce; medo dito diminui.",
+    pedir:"Senhor, meu medo hoje tem nome. Eu digo pra ti: __. Toma isso das minhas mãos." },
+  { k:"familia", label:"Orar pela família",
+    v:"Eu e a minha casa serviremos ao Senhor.", r:"Josué 24.15",
+    f:"Ore por um de cada vez, pelo nome, com um pedido só.",
+    pedir:"Pai, eu trago minha casa. Cada nome, um pedido. Age onde eu não alcanço." },
+  { k:"vazio", label:"Quando não sinto nada",
+    v:"Porque andamos por fé, e não por vista.", r:"2 Coríntios 5.7",
+    f:"Sentir nada não é sinal de que Deus não ouviu. Continue.",
+    pedir:"Senhor, hoje não sinto tua presença, e mesmo assim eu venho. Fé é isso: aparecer sem prova." },
+  { k:"espera", label:"Esperar uma resposta",
+    v:"Espera no Senhor, anima-te, e ele fortalecerá o teu coração.", r:"Salmo 27.14",
+    f:"Resposta demorada não é resposta negada. Espere orando.",
+    pedir:"Pai, faz tempo que eu peço __. Renova minha paciência enquanto eu espero." },
+  { k:"aperto", label:"Quando a vida aperta",
+    v:"No dia da minha angústia, clamo a ti, porque tu me respondes.", r:"Salmo 86.7",
+    f:"Dia difícil é quando a oração mais importa, não quando ela para.",
+    pedir:"Senhor, hoje apertou. Eu clamo no meio disso, sem esperar melhorar pra orar." },
+  { k:"ousadia", label:"Pedir com ousadia",
+    v:"Pedi, e dar-se-vos-á; buscai, e achareis; batei, e abrir-se-vos-á.", r:"Mateus 7.7",
+    f:"Peça a coisa grande, com todas as letras. Sem rodeio.",
+    pedir:"Pai, eu vou pedir sem diminuir: __. Se for da tua vontade, faz. E me dá paz se a resposta for outra." },
+  { k:"interceder", label:"Orar por alguém",
+    v:"Orai uns pelos outros, para serdes curados.", r:"Tiago 5.16",
+    f:"Saia de você. Ore por alguém que está pior do que você hoje.",
+    pedir:"Senhor, hoje eu oro por __, que precisa mais do que eu. Cuida dessa pessoa." },
+  { k:"entregar", label:"Entregar o controle",
+    v:"Entrega o teu caminho ao Senhor, confia nele, e ele tudo fará.", r:"Salmo 37.5",
+    f:"Abra a mão. O que você segura com força é o que mais te cansa.",
+    pedir:"Pai, eu entrego __. Já tentei resolver e não deu. Assume tu daqui pra frente." },
+  { k:"dispersa", label:"Mente cheia, sem foco",
+    v:"Aquietai-vos e sabei que eu sou Deus.", r:"Salmo 46.10",
+    f:"A mente vai fugir. Quando perceber, volte. Isso já é oração.",
+    pedir:"Pai, minha cabeça está cheia. Cada vez que eu me perder, me traz de volta sem cobrança." },
+  { k:"biblia", label:"Orar com a Bíblia aberta",
+    v:"Lâmpada para os meus pés é a tua palavra, e luz para o meu caminho.", r:"Salmo 119.105",
+    f:"Quando faltar o que dizer, leia um versículo e devolva em oração.",
+    pedir:"Pai, fala comigo pela tua palavra hoje, e me ensina a responder com ela." },
+];
+
+/* ---------- SENTIMENTOS ---------- */
+const FEELINGS = [
+  { k: "cansada", label: "Cansada / sobrecarregada",
+    aquietar: "Não tente se animar. Solte os ombros, respire fundo três vezes e deixe o corpo pesar na cadeira.",
+    falar: "Senhor, eu chego sem energia. A semana me esvaziou e eu nem sei por onde começar. Não vou fingir força que não tenho. Fica comigo nesse cansaço e carrega o que eu larguei no chão." },
+  { k: "ansiosa", label: "Ansiosa / com medo",
+    aquietar: "Coloque a mão no peito. Sinta a respiração. Antes de orar, diga em voz baixa: agora eu estou aqui, e Deus também.",
+    falar: "Pai, minha cabeça está adiantando o pior. Eu trago o medo pelo nome: __. Não peço que suma agora, peço que tu segure a minha mão enquanto eu atravesso." },
+  { k: "culpada", label: "Culpada / envergonhada",
+    aquietar: "Você tem permissão de orar hoje, exatamente como está. A culpa não é a porta fechada; é o motivo de entrar.",
+    falar: "Senhor, eu venho envergonhada, com vontade de me esconder. Tu conheces o que eu fiz e mesmo assim me chamas. Eu confesso __ e recebo o teu perdão, mesmo que meu sentimento demore a acreditar." },
+  { k: "seca", label: "Distante / seca",
+    aquietar: "Não force emoção. Ore como quem acende a luz num cômodo escuro: sem sentir nada, só fazendo o gesto.",
+    falar: "Deus, faz tempo que eu não te sinto. A oração está seca e eu quase não vim hoje. Mesmo assim eu apareci. Trata essa distância no teu tempo; eu vou continuar aparecendo." },
+  { k: "grata", label: "Grata / animada",
+    aquietar: "Aproveite que hoje está mais leve. Comece nomeando em voz alta três coisas boas concretas de ontem para hoje.",
+    falar: "Pai, hoje eu chego leve, e quero te agradecer antes de pedir qualquer coisa. Obrigada por __, por __ e por __. Guarda em mim essa vontade de orar para os dias que não vierem assim." },
+  { k: "magoada", label: "Magoada / com raiva",
+    aquietar: "Não engula o que está sentindo. Deus aguenta a sua raiva. Diga como está, sem filtrar, e depois respire.",
+    falar: "Senhor, eu estou magoada e com raiva, e não vou disfarçar diante de ti. Me feriram, ou eu me feri. Eu coloco isso na tua frente em vez de descontar em alguém hoje. Cuida do meu coração." },
+  { k: "vazia", label: "Vazia / sem palavras",
+    aquietar: "Se não vier palavra nenhuma, tudo bem. Fique em silêncio um minuto. O silêncio diante de Deus também é oração.",
+    falar: "Pai, eu não tenho o que dizer hoje. Estou vazia. Fico aqui em silêncio e deixo que tu leias o que eu nem consigo colocar em frase." },
+];
+
+const TIMES = [3, 7, 12];
+
+const store = {
+  get(key, fallback) {
+    try { const v = localStorage.getItem("onh_" + key); return v == null ? fallback : JSON.parse(v); }
+    catch (e) { return fallback; }
+  },
+  set(key, val) { try { localStorage.setItem("onh_" + key, JSON.stringify(val)); } catch (e) {} },
+};
+
+function buildOracao(situKey, feelKey, minutes) {
+  const situ = SITUATIONS.find(s => s.k === situKey) || SITUATIONS[0];
+  const feel = FEELINGS.find(f => f.k === feelKey) || FEELINGS[0];
+  const blocks = [];
+
+  if (minutes === 3) {
+    blocks.push({ name: "Aquietar", time: "30 seg", body: feel.aquietar });
+    blocks.push({ name: "Palavra pra hoje", time: "1 min", verse: situ.v, ref: situ.r,
+      body: "Leia devagar, duas vezes. " + situ.f });
+    blocks.push({ name: "Entregar", time: "1 min", body:
+      "Diga a Deus, com suas palavras: “O que eu não consigo resolver agora, eu deixo contigo.”",
+      anchor: "Se a mente fugir, volte a esta frase: “Estou aqui, e Deus também.”" });
+  } else if (minutes === 7) {
+    blocks.push({ name: "Aquietar", time: "1 min", body: feel.aquietar });
+    blocks.push({ name: "Palavra pra hoje", time: "2 min", verse: situ.v, ref: situ.r,
+      body: "Leia duas vezes, sem pressa. " + situ.f });
+    blocks.push({ name: "Falar com Deus sobre como você está", time: "2 min", body: feel.falar });
+    blocks.push({ name: "Pedir", time: "1 min", body: situ.pedir });
+    blocks.push({ name: "Entregar", time: "1 min", body:
+      "Termine assim: “Isto está nas tuas mãos agora, não nas minhas.”",
+      anchor: "Frase âncora: “" + situ.v + "”" });
+  } else {
+    blocks.push({ name: "Aquietar", time: "2 min", body: feel.aquietar +
+      "\n\nNão passe adiante com pressa. Fique aqui até a respiração acalmar." });
+    blocks.push({ name: "Palavra pra hoje", time: "3 min", verse: situ.v, ref: situ.r,
+      body: "Leia três vezes. Na terceira, pare na palavra que mais pesou. " + situ.f +
+      "\n\nPergunte: o que isso muda no meu agora?" });
+    blocks.push({ name: "Falar com Deus sobre como você está", time: "3 min", body: feel.falar +
+      "\n\nDepois de dizer, fique em silêncio um pouco e deixe Deus responder." });
+    blocks.push({ name: "Pedir", time: "2 min", body: situ.pedir +
+      "\n\nSe houver mais alguém para incluir, diga o nome e um pedido só para cada um." });
+    blocks.push({ name: "Entregar e agradecer", time: "2 min", body:
+      "Agradeça por uma coisa concreta deste encontro. Depois entregue: “O que eu trouxe aqui, eu não levo de volta.”",
+      anchor: "Leve isso com você: “" + situ.v + "” (" + situ.r + ")" });
+  }
+  return { situ, feel, minutes, blocks };
+}
+
+function Bloco({ b }) {
+  return (
+    <div className="bloco">
+      <div className="b-head">
+        <span className="b-name">{b.name}</span>
+        <span className="b-time">{b.time}</span>
+      </div>
+      {b.verse && <div className="b-verse verse">“{b.verse}”</div>}
+      {b.ref && <div className="b-ref">{b.ref}</div>}
+      <div className="b-body">{b.body}</div>
+      {b.anchor && <div className="b-body" style={{marginTop:8,color:"var(--sage-deep)",fontWeight:600}}>{b.anchor}</div>}
+    </div>
+  );
+}
+
+function App() {
+  const [situKey, setSituKey] = useState(null);
+  const [feelKey, setFeelKey] = useState(null);
+  const [minutes, setMinutes] = useState(7);
+  const [result, setResult] = useState(null);
+  const [favs, setFavs] = useState(() => store.get("favs", []));
+
+  useEffect(() => { store.set("favs", favs); }, [favs]);
+
+  const canGenerate = situKey && feelKey;
+
+  function generate() {
+    if (!canGenerate) return;
+    setResult(buildOracao(situKey, feelKey, minutes));
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }
+
+  function saveFav() {
+    if (!result) return;
+    const item = {
+      id: Date.now(),
+      title: SITUATIONS.find(s=>s.k===result.situ.k).label + " · " + FEELINGS.find(f=>f.k===result.feel.k).label,
+      minutes: result.minutes,
+    };
+    setFavs([item, ...favs].slice(0, 20));
+  }
+
+  function removeFav(id) {
+    setFavs(favs.filter(f => f.id !== id));
+  }
+
+  return (
+    <div className="wrap">
+      <header className="top">
+        <div className="kicker">Oração na Hora</div>
+        <h1>Diga como você está. Receba a oração pronta.</h1>
+        <p>Sem desafio de dias, sem compromisso. Toda vez que precisar, é só escolher de novo — mais de 300 combinações possíveis.</p>
+      </header>
+
+      <div className="card">
+        <div className="step-label">1. Qual é o motivo de hoje?</div>
+        <div className="grid">
+          {SITUATIONS.map(s => (
+            <button key={s.k} className={"chip" + (situKey===s.k?" active":"")} onClick={() => setSituKey(s.k)}>
+              {s.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="card">
+        <div className="step-label">2. Como você está se sentindo?</div>
+        <div className="grid">
+          {FEELINGS.map(f => (
+            <button key={f.k} className={"chip" + (feelKey===f.k?" active":"")} onClick={() => setFeelKey(f.k)}>
+              {f.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="card">
+        <div className="step-label">3. Quanto tempo você tem agora?</div>
+        <div className="times">
+          {TIMES.map(t => (
+            <button key={t} className={"chip" + (minutes===t?" active":"")} onClick={() => setMinutes(t)}>
+              {t} min
+            </button>
+          ))}
+        </div>
+        <button className="cta" disabled={!canGenerate} onClick={generate}>
+          Gerar minha oração
+        </button>
+        {!canGenerate && <p className="muted" style={{marginTop:8}}>Escolha o motivo e o sentimento acima.</p>}
+      </div>
+
+      {result && (
+        <div className="card">
+          <h2>Sua oração de agora</h2>
+          <div className="roteiro">
+            {result.blocks.map((b, i) => <Bloco key={i} b={b} />)}
+          </div>
+          <div className="actions">
+            <button className="cta ghost" onClick={saveFav}>Guardar nos favoritos</button>
+            <button className="cta" onClick={generate}>Gerar outra</button>
+          </div>
+        </div>
+      )}
+
+      {favs.length > 0 && (
+        <div className="card">
+          <h2>Meus favoritos</h2>
+          <div className="fav-list">
+            {favs.map(f => (
+              <div key={f.id} className="fav-item">
+                <span>{f.title} · {f.minutes} min</span>
+                <button onClick={() => removeFav(f.id)}>remover</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <footer>Oração na Hora · uso pessoal, pelo navegador, sem baixar nada.</footer>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
